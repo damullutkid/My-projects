@@ -1,0 +1,79 @@
+import numpy as np 
+import pandas as pd #we use pd as convention name for pandas
+
+
+First we will start with dataframes and series, series are similer to arrays from numpy with the diffrence being with seires we can define lables for the values
+my_series = pd.Series(
+    data=[2,4,6,8],
+    index=['a','b','c','d'])
+
+
+my_series
+Alternativley we can use dictionaries to create series where the keys will be the indexes and the values will be the data set. 
+data = {'A':1, 'b':2, 'c':3, 'd':4}
+
+data
+
+my_series = pd.Series(data)
+
+my_series
+
+we can also index, perform mathmatical operations, and use numpy statistcal function on pandas. 
+my_series[2] #indexing a series
+print(np.mean(my_series))
+my_series + my_series #adding a series
+
+
+
+Pandas Dataframes:
+Data frames are essentialy pythons implamentation of tables from things like Excel and SQL.
+to create a data frame we use pd.Dataframes()
+my_dict = {"name" : ["Joe","Bob","Frans"],
+           "age" : np.array([10,15,20]),
+           "weight" : (75,123,239),
+           "height" : pd.Series([4.5, 5, 6.1], 
+                                index=["Joe","Bob","Frans"]),
+           "siblings" : 1,
+           "gender" : "M"}
+
+df = pd.DataFrame(my_dict) #here we convert the dictionary to a data frame
+df
+#We can also add to the df using df[], or del using del df[]
+df['IQ'] = [130, 105, 115]
+df
+#we can also ask python to output a specific row and coloum using loc[]
+df.loc["Joe"]
+df.loc['Joe', "age"]
+#we can also slice these dataframes using colons
+df.loc['Joe':"Bob", "gender":"IQ"]
+#we use iloc for numerical indexing
+df.iloc[1] #this work row, coloum
+
+Logical Indexing!!!!
+  -We will be using this a lot in data sciene
+  -simpily put is classifies things as True or False, which we can use for example to set the value true or false based on if a person is
+    above a certian age.
+  -This will help us subset data based on a result 
+
+boolean_index = [False, True, True] #basically this is saying the 1st row is false and the 2nd and 3rd are True.
+df[boolean_index]
+#an example of subsetting would be, notice how Joe is not included becuase he has been set to false
+boolean_index = df['age'] > 12
+df[boolean_index]
+
+Exploring Dataframe/ Real Excel Files /SQL
+-Most data we work with wont be data we create rather data from excel
+
+titanic_train = pd.read_csv('train.csv')
+type(titanic_train)
+titanic_train.shape #this will show us the strucute of the dataframe
+titanic_train.tail(6) #we can also get the last # of rows using tail
+.Describe 
+
+-This function is very helpful because it will provide us with things such as the 
+    -min
+    -max
+    -mean
+titanic_train.describe()
+#and if we only want to get the mean of every coloum we can use 
+titanic_train.mean(axis=0)
